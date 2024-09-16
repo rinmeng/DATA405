@@ -130,6 +130,7 @@ for (a in 1:m) {
 ```
 
 $\mathbf{Remark: }$ The $X_0$ listed above is not the real $X_0$ that was used to start the sequence.
+
 Now that we have our $a$ and $c$ value, we can start to predict the next 10 numbers after $20601$.
 
 ```{r}
