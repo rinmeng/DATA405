@@ -4,7 +4,7 @@ output: pdf_document
 date: "2024-09-12"
 ---
 
-# Question 1).
+1 \# Question 1).
 
 ```{r}
 unirand <- function(n, m=30269, a=171, seed=1) {
@@ -20,6 +20,7 @@ unirand(5)
 
 # Code taken from SimulationI slide
 ```
+
 This multiplicative congruential generator contains a maximal cycle length of $m - 1 = 30306$.
 
 # Question 2).
@@ -37,10 +38,10 @@ unirand2 <- function(n, m=30323, a=170, seed=1) {
 unirand2(5)
 # Code taken from SimulationI slide
 ```
+
 This multiplicative congruential generator contains a maximal cycle length of $m - 1 = 30322$.
 
-
-# Question 3). 
+# Question 3).
 
 ```{r}
 unirand3 <- function(n, s1, s2) {
@@ -95,9 +96,59 @@ gcd_set <- function(numbers) {
 }
 
 # example
-numbers <- c(2205,21065,5241, 12752, 25817,6724,18604,7158,21788,20601)
-gcd_result <- gcd_set(numbers)
+sequence <- c(2205, 21065, 5241, 12752, 25817, 6724, 18604, 7158, 21788, 20601)
+gcd_result <- gcd_set(sequence)
 print(gcd_result)
+
+diffs <- diff(sequence)
+print(diffs)
+```
+So, with the difference printed out, $diffs =[-19093, 18860]$ and since linear congruential generators often use powers of 2 for modulus values, we can start testing values that are closer to 19093, such as $m = 2^{15} = 32768$. Now we can use brute force to find $a$ and $c$.
+
+```{r}
+
+m <- 32768
+
+# define the known values from the sequence
+X0 <- 2205
+X1 <- 21065
+X2 <- 5241
+
+# Set up the equations (modular arithmetic)
+# Equation 1: X1 = (a * X0 + c) %% m
+# Equation 2: X2 = (a * X1 + c) %% m
+
+# Solve for a and c using brute force or linear algebra in modular arithmetic
+for (a in 1:m) {
+  c <- (X1 - a * X0) %% m
+  if ((a * X1 + c) %% m == X2) {
+    print(paste("a:", a, "and c:", c))
+    break
+  }
+}
+
+```
+So now that we have our $a$ and $c$ value, we can start to predict the next 10 numbers after $20601$.
+
+```{r}
+a <- 3236
+c <- 29109
+m <- 32768
+
+lastX <- 20601
+
+generateNum <- function(a,c,m,xn){
+  return((a*xn + c) %% m)
+}
+
+next10 <- c(20601)
+
+for (i in 2:11){
+  next10[i] <- generateNum(a, c, m, next10[i-1])
+}
+
+# Display the generated numbers
+print(next10)
 
 ```
 
