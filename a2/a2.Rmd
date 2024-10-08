@@ -1,0 +1,112 @@
+---
+title: "DATA 405 Assignment 2"
+author: "Rin Meng 51940633"
+
+output: 
+  pdf_document:
+    keep_tex: true
+---
+
+# Question 1
+
+a).
+
+```{r}
+X <- c(0.5, 0.3, 0.2)
+cumsum.X <- cumsum(X)
+cumsum.X
+```
+
+b).
+
+```{r}
+pX <- function (x){
+  return(cumsum.X[x+1])
+}
+```
+
+c).
+
+```{r}
+rX <- function(x){
+  U <- runif(x)
+  X <- numeric(x)
+  x <- 0
+  for (x in 0:6) {
+    X[U >= pX(x)] <- x + 1
+    x <- x+1
+  }
+  return(X)
+}
+rX(10)
+```
+
+d).
+
+```{r}
+myX <- rX(1000)
+```
+
+e).
+
+```{r}
+table(myX)
+```
+
+No these values do not differ from what we would have expected, because for $n = 1000$, we can say that $E[0] = 0.5 \times 1000 = 500$ and $E[1] = 0.3 \times 1000 = 300$ and also, $E[2] = 0.2 \times 1000 = 200$, where as our values observed, is relatively close to those values.
+
+f).
+
+```{r, fig.width=5, fig.height=5, fig.cap="Probability histogram of myX"}
+barplot(table(myX), xlab = "Probability of getting X = x", ylab="Occurance Frequency",ylim = c(0,500), main="Probability histogram")
+```
+
+# Question 2
+
+```{r}
+binsim <- rbinom(1000, size = 20, prob = 0.3)
+```
+
+a).
+
+```{r}
+mean(binsim <= 5)
+```
+
+b).
+
+```{r}
+mean(binsim == 5)
+```
+
+c).
+
+```{r}
+mean(binsim)
+```
+
+d).
+
+```{r}
+var(binsim)
+```
+
+# Question 3
+
+```{r}
+P1 <- rpois(10000, lambda = 5)
+P2 <- rpois(10000, lambda = 25)
+P3 <- rpois(10000, lambda = 125)
+P4 <- rpois(10000, lambda = 625)
+```
+
+a).
+
+```{r}
+cat("default", mean(P1), mean(P2), mean(P3), mean(P4))
+cat("\n sqrt: ", mean(sqrt(P1)), mean(sqrt(P2)), mean(sqrt(P3)), mean(sqrt(P4)))
+cat("\n var sqrt: ", var(sqrt(P1)), var(sqrt(P2)), var(sqrt(P3)), var(sqrt(P4)))
+cat("\n var: ", var(P1), var(P2), var(P3), var(P4))
+```
+
+b). The effect of taking the square root of X on the relationship between variance and the mean is that when square rooting, we reduce the amount of how much variance depends on the mean, making the variance in this observation more stabilized. Based on our result, we see that the variance square rooted seems to stay at a constant rate of around 0.25.
