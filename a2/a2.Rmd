@@ -58,7 +58,8 @@ No these values do not differ from what we would have expected, because for $n =
 f).
 
 ```{r, fig.width=5, fig.height=5, fig.cap="Probability histogram of myX"}
-barplot(table(myX), xlab = "Probability of getting X = x", ylab="Occurance Frequency",ylim = c(0,500), main="Probability histogram")
+barplot(table(myX), xlab = "Probability of getting X = x", 
+        ylab="Occurance Frequency",ylim = c(0,500), main="Probability histogram")
 ```
 
 # Question 2
