@@ -1,15 +1,14 @@
-# Set the seed for reproducibility
-set.seed(2424)
+# Create the data frame
+Fire_Spread <- data.frame(
+  R = c(30, 32, 18, 35, 12, 17, 20, 22, 24),  # Rate of spread
+  W = c(35, 40, 20, 50, 15, 22, 27, 36, 35)   # Wind speed
+)
 
-# Generate binary outcomes for 10 mice
-outcomes <- rbinom(10, 1, 0.8)
+# Fit the linear model
+Fire.lm <- lm(R ~ W, data = Fire_Spread)
 
-rbinom()
+# Show the summary of the model
+summary(Fire.lm)
 
-# Print the outcomes
-outcomes
-
-U <- runif(5, .6, .8)
-successes <- rbinom(5, 100, U)
-
-
+# Run the ANOVA
+anova(Fire.lm)
